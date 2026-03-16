@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public struct BuisnessComponent
+public struct BusinessComponent
 {
     public string name;
     public int level;

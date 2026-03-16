@@ -16,9 +16,44 @@ public sealed class EcsGameStartup : MonoBehaviour
         AddOneFrames();
         AddSystems();
         
+        TEST_CreatePlayer();
+        TEST_CreateBuisness();
+
+        systems
+            .Add(new IncomingSystem());
+        
         systems.Init();
     }
 
+    private void TEST_CreatePlayer()
+    {
+        int entity = world.NewEntity();    
+        EcsPool<PlayerBalanceComponent> pool = world.GetPool<PlayerBalanceComponent>();
+        
+        ref PlayerBalanceComponent balance = ref pool.Add(entity);
+        balance.balance = 0;
+    }
+    
+    private void TEST_CreateBuisness()
+    {
+        int entity = world.NewEntity();
+        EcsPool<BusinessComponent> buisnessPool = world.GetPool<BusinessComponent>();
+        EcsPool<IncomeProgressComponent> incomeProgressPool = world.GetPool<IncomeProgressComponent>();
+        
+        ref BusinessComponent businessComponent = ref buisnessPool.Add(entity);
+        ref IncomeProgressComponent incomeProgressComponent = ref incomeProgressPool.Add(entity);
+
+        businessComponent.name = $"Business {entity}";
+        businessComponent.level = 1;
+        businessComponent.currentIncoming = 1;
+        businessComponent.incomintDelay = 5;
+
+        incomeProgressComponent.incomintProgress = 0;
+        
+        Debug.Log($"Business {businessComponent.name} created!");
+
+    }
+    
     private void AddSystems()
     {
         
