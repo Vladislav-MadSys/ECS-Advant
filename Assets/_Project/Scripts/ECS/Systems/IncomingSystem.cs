@@ -36,8 +36,8 @@ public class IncomingSystem : IEcsInitSystem, IEcsRunSystem
                 foreach (int playerBalance in _playerFilter)
                 {
                     ref PlayerBalanceComponent balance = ref _playerBalanceComponents.Get(playerBalance);
-                    balance.balance += business.currentIncoming;
-                    Debug.Log($"Доход начислен: +{business.currentIncoming}, баланс: {balance.balance}");
+                    balance.balance += business.level * business.basicIncoming;
+                    Debug.Log($"Доход начислен: +{business.basicIncoming}, баланс: {balance.balance}");
                 }
                 incomeProgress.incomintProgress = 0;
             }

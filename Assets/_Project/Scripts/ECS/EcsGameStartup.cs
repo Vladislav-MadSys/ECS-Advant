@@ -4,31 +4,32 @@ using UnityEngine;
 
 public sealed class EcsGameStartup : MonoBehaviour
 {
-    private EcsWorld world;
-    private EcsSystems systems;
-
+    [SerializeField] private BusinessConfig[] businessConfigs;
+    
+    private EcsWorld _world;
+    private EcsSystems _systems;
     private void Start()
     {
-        world = new EcsWorld();
-        systems = new EcsSystems(world);
+        _world = new EcsWorld();
+        _systems = new EcsSystems(_world);
         
         AddInjections();
         AddOneFrames();
         AddSystems();
         
-        TEST_CreatePlayer();
-        TEST_CreateBuisness();
+        CreatePlayer();
 
-        systems
-            .Add(new IncomingSystem());
+        _systems
+            .Add(new IncomingSystem())
+            .Add(new BusinesInitSystem(businessConfigs));
         
-        systems.Init();
+        _systems.Init();
     }
 
-    private void TEST_CreatePlayer()
+    private void CreatePlayer()
     {
-        int entity = world.NewEntity();    
-        EcsPool<PlayerBalanceComponent> pool = world.GetPool<PlayerBalanceComponent>();
+        int entity = _world.NewEntity();    
+        EcsPool<PlayerBalanceComponent> pool = _world.GetPool<PlayerBalanceComponent>();
         
         ref PlayerBalanceComponent balance = ref pool.Add(entity);
         balance.balance = 0;
@@ -36,21 +37,7 @@ public sealed class EcsGameStartup : MonoBehaviour
     
     private void TEST_CreateBuisness()
     {
-        int entity = world.NewEntity();
-        EcsPool<BusinessComponent> buisnessPool = world.GetPool<BusinessComponent>();
-        EcsPool<IncomeProgressComponent> incomeProgressPool = world.GetPool<IncomeProgressComponent>();
         
-        ref BusinessComponent businessComponent = ref buisnessPool.Add(entity);
-        ref IncomeProgressComponent incomeProgressComponent = ref incomeProgressPool.Add(entity);
-
-        businessComponent.name = $"Business {entity}";
-        businessComponent.level = 1;
-        businessComponent.currentIncoming = 1;
-        businessComponent.incomintDelay = 5;
-
-        incomeProgressComponent.incomintProgress = 0;
-        
-        Debug.Log($"Business {businessComponent.name} created!");
 
     }
     
@@ -71,13 +58,13 @@ public sealed class EcsGameStartup : MonoBehaviour
 
     private void Update()
     {
-        systems.Run();
+        _systems.Run();
     }
 
     private void OnDestroy()
     {
-        systems.Destroy();
-        systems = null;
-        world.Destroy();
+        _systems.Destroy();
+        _systems = null;
+        _world.Destroy();
     }
 }
