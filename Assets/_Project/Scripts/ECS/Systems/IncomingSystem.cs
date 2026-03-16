@@ -31,19 +31,23 @@ public class IncomingSystem : IEcsInitSystem, IEcsRunSystem
             ref BusinessComponent business = ref _buisnessComponents.Get(entity);
             ref IncomeProgressComponent incomeProgress = ref _incomeProgressComponents.Get(entity);
 
-            if (incomeProgress.incomintProgress >= business.incomintDelay)
+            if (business.level > 0)
             {
-                foreach (int playerBalance in _playerFilter)
+                if (incomeProgress.incomintProgress >= business.incomintDelay)
                 {
-                    ref PlayerBalanceComponent balance = ref _playerBalanceComponents.Get(playerBalance);
-                    balance.balance += business.level * business.basicIncoming;
-                    Debug.Log($"Доход начислен: +{business.basicIncoming}, баланс: {balance.balance}");
+                    foreach (int playerBalance in _playerFilter)
+                    {
+                        ref PlayerBalanceComponent balance = ref _playerBalanceComponents.Get(playerBalance);
+                        balance.balance += business.level * business.basicIncoming;
+                        Debug.Log($"Доход начислен: +{business.basicIncoming}, баланс: {balance.balance}");
+                    }
+
+                    incomeProgress.incomintProgress = 0;
                 }
-                incomeProgress.incomintProgress = 0;
-            }
-            else
-            {
-                incomeProgress.incomintProgress += Time.deltaTime;
+                else
+                {
+                    incomeProgress.incomintProgress += Time.deltaTime;
+                }
             }
         }
     }

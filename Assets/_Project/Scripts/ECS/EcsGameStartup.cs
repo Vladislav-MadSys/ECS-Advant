@@ -5,6 +5,8 @@ using UnityEngine;
 public sealed class EcsGameStartup : MonoBehaviour
 {
     [SerializeField] private BusinessConfig[] businessConfigs;
+    [SerializeField] private GameObject businessPanelPrefab;
+    [SerializeField] private Transform businessPanelParent;
     
     private EcsWorld _world;
     private EcsSystems _systems;
@@ -21,7 +23,8 @@ public sealed class EcsGameStartup : MonoBehaviour
 
         _systems
             .Add(new IncomingSystem())
-            .Add(new BusinesInitSystem(businessConfigs));
+            .Add(new BusinesInitSystem(businessConfigs, businessPanelPrefab, businessPanelParent))
+            .Add(new BusinessUISystem());
         
         _systems.Init();
     }
@@ -33,12 +36,6 @@ public sealed class EcsGameStartup : MonoBehaviour
         
         ref PlayerBalanceComponent balance = ref pool.Add(entity);
         balance.balance = 0;
-    }
-    
-    private void TEST_CreateBuisness()
-    {
-        
-
     }
     
     private void AddSystems()

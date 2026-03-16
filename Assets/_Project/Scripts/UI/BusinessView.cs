@@ -21,4 +21,24 @@ public class BusinessView : MonoBehaviour
     [Header("Second Upgrade")]
     [SerializeField] private TextMeshProUGUI secondUpgradeIncomingText;
     [SerializeField] private TextMeshProUGUI secondUpgradePriceText;
+
+    public void SetBusinessName(string newName)
+    {
+        nameText.text = '"' + newName + '"';
+    }
+    
+    public void SetLevelText(string newLevelText)
+    {
+        levelText.text = newLevelText;
+    }
+
+    public void SetIncomingText(string newIncomingText)
+    {
+        incomingText.text = newIncomingText;
+    }
+
+    public void UpdateBar(float incomeProgress, float incomeDelay)
+    {
+        incomingBar.fillAmount = incomeProgress / incomeDelay;
+    }
 }
