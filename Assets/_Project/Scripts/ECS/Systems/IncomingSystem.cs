@@ -13,14 +13,15 @@ namespace _Project.Scripts.ECS.Systems
         private EcsPool<BusinessComponent> _buisnessComponents = null;
         private EcsPool<IncomeProgressComponent> _incomeProgressComponents = null;
 
-        private EcsFilter _playerFilter = null;
         private EcsPool<PlayerBalanceComponent> _playerBalanceComponents = null;
 
         private GameplayView _gameplayView;
+        private int _playerBalanceEntity;
 
-        public IncomingSystem(GameplayView gameplayView)
+        public IncomingSystem(GameplayView gameplayView, int playerBalanceEntity)
         {
             _gameplayView = gameplayView;
+            _playerBalanceEntity = playerBalanceEntity;
         }
     
         public void Init(IEcsSystems systems)
@@ -31,7 +32,6 @@ namespace _Project.Scripts.ECS.Systems
             _buisnessComponents = _world.GetPool<BusinessComponent>();
             _incomeProgressComponents = _world.GetPool<IncomeProgressComponent>();
         
-            _playerFilter = _world.Filter<PlayerBalanceComponent>().End();
             _playerBalanceComponents = _world.GetPool<PlayerBalanceComponent>();
 
         }
@@ -43,24 +43,18 @@ namespace _Project.Scripts.ECS.Systems
                 ref BusinessComponent business = ref _buisnessComponents.Get(entity);
                 ref IncomeProgressComponent incomeProgress = ref _incomeProgressComponents.Get(entity);
 
-                if (business.level > 0)
+                if (business.Level > 0)
                 {
-                    if (incomeProgress.incomintProgress >= business.incomintDelay)
+                    if (incomeProgress.IncomintProgress >= business.IncomintDelay)
                     {
-                        foreach (int playerBalance in _playerFilter)
-                        {
-                            ref PlayerBalanceComponent balance = ref _playerBalanceComponents.Get(playerBalance);
-                            balance.balance += business.level * business.basicIncoming;
-                            _gameplayView.UpdateBalance(balance.balance.ToString());
-                            Debug.Log($"Доход начислен: +{business.basicIncoming}, баланс: {balance.balance}");
-                        }
-
-                        incomeProgress.incomintProgress = 0;
-                    
+                        ref PlayerBalanceComponent balance = ref _playerBalanceComponents.Get(_playerBalanceEntity);
+                        balance.Balance += business.CurrentIncoming;
+                        _gameplayView.UpdateBalance(balance.Balance.ToString());
+                        incomeProgress.IncomintProgress = 0;
                     }
                     else
                     {
-                        incomeProgress.incomintProgress += Time.deltaTime;
+                        incomeProgress.IncomintProgress += Time.deltaTime;
                     }
                 }
             }

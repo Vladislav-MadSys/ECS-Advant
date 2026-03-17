@@ -1682,10 +1682,13 @@ MonoBehaviour:
   incomingText: {fileID: 565900837631429295}
   incomingBar: {fileID: 1096864170950137367}
   levelUpPriceText: {fileID: 1441833278378738202}
+  levelUpButton: {fileID: 8226280096917875132}
   firstUpgradeIncomingText: {fileID: 1112538106674277612}
   firstUpgradePriceText: {fileID: 6766698181109161632}
+  firstUpgradeButton: {fileID: 2691048770361809563}
   secondUpgradeIncomingText: {fileID: 6329601893006283280}
   secondUpgradePriceText: {fileID: 1492039314738585886}
+  secondUpgradeButton: {fileID: 8854037755217928835}
 --- !u!1 &6611869831357899543
 GameObject:
   m_ObjectHideFlags: 0

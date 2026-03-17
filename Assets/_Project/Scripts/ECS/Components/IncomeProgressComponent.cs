@@ -2,6 +2,6 @@ namespace _Project.Scripts.ECS.Components
 {
     public struct IncomeProgressComponent 
     {
-        public float incomintProgress;
+        public float IncomintProgress;
     }
 }

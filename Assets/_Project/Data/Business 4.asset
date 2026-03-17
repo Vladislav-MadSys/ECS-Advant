@@ -17,7 +17,7 @@ MonoBehaviour:
   basicPrice: 1000
   basicIncoming: 1000
   incomintDelay: 17
-  firstUpgradePrise: 15000
+  firstUpgradePrice: 15000
   firstUpgradeIncomingMultiplier: 1
-  secondUpgradePrise: 50000
+  secondUpgradePrice: 50000
   secondUpgradeIncomingMultiplier: 2

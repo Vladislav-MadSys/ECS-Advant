@@ -20,47 +20,31 @@ namespace _Project.Scripts.ECS
     
         private EcsWorld _world;
         private EcsSystems _systems;
+
+        private int _playerBalanceEntity;
+        
         private void Start()
         {
             _world = new EcsWorld();
             _systems = new EcsSystems(_world);
         
-            AddInjections();
-            AddOneFrames();
-            AddSystems();
-        
             CreatePlayer();
 
             _systems
-                .Add(new IncomingSystem(_gameplayView))
+                .Add(new IncomingSystem(_gameplayView, _playerBalanceEntity))
                 .Add(new BusinesInitSystem(businessConfigs, businessPanelPrefab, businessPanelParent))
-                .Add(new BusinessUISystem());
+                .Add(new BusinessUISystem())
+                .Add(new BusinessUpgradeSystem(_playerBalanceEntity, _gameplayView));
         
             _systems.Init();
         }
 
         private void CreatePlayer()
         {
-            int entity = _world.NewEntity();    
+            _playerBalanceEntity = _world.NewEntity();
             EcsPool<PlayerBalanceComponent> pool = _world.GetPool<PlayerBalanceComponent>();
-        
-            ref PlayerBalanceComponent balance = ref pool.Add(entity);
-            balance.balance = 0;
-        }
-    
-        private void AddSystems()
-        {
-        
-        }
-
-        private void AddInjections()
-        {
-        
-        }
-
-        private void AddOneFrames()
-        {
-        
+            ref PlayerBalanceComponent balance = ref pool.Add(_playerBalanceEntity);
+            balance.Balance = 0;
         }
 
         private void Update()

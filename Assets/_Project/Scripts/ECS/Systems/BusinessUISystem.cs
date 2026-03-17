@@ -29,8 +29,15 @@ namespace _Project.Scripts.ECS.Systems
                 var businessComponent = _businessPool.Get(entity);
                 var incomeComponent = _incomeProgressPool.Get(entity);
                 var businessViewRef = _businessViewRef.Get(entity);
-            
-                businessViewRef.View.UpdateBar(incomeComponent.incomintProgress, businessComponent.incomintDelay);
+                
+                businessViewRef.View.UpdateBar(incomeComponent.IncomintProgress, businessComponent.IncomintDelay);
+                businessViewRef.View.SetIncomingText(businessComponent.CurrentIncoming.ToString());
+                businessViewRef.View.SetLevelText(businessComponent.Level.ToString());
+                businessViewRef.View.SetLevelUpPrice((businessComponent.Level+1)*businessComponent.BasicLevelUpCost);
+                businessViewRef.View.SetFirstUpgradePrice(businessComponent.FirstUpgradePrice, businessComponent.IsFirstUpgradeBuyed);
+                businessViewRef.View.SetSecondUpgradePrice(businessComponent.SecondUpgradePrice, businessComponent.IsSecondUpgradeBuyed);
+                businessViewRef.View.SetFirstUpgradeIncomingMultiplier(businessComponent.FirstUpgradeMultipler);
+                businessViewRef.View.SetSecondUpgradeIncomingMultiplier(businessComponent.SecondUpgradeMultipler);
             }
         }
     }

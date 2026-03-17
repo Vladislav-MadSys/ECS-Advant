@@ -35,20 +35,27 @@ namespace _Project.Scripts.ECS.Systems
                 ref IncomeProgressComponent incomeProgressComponent = ref incomeProgressPool.Add(entity);
                 ref BusinessViewRef businessViewRef = ref viewRef.Add(entity);
 
-                businessComponent.name = config.name;
-                businessComponent.level = config.level;
-                businessComponent.basicIncoming = config.basicIncoming;
-                businessComponent.incomintDelay = config.incomintDelay;
+                businessComponent.Name = config.name;
+                businessComponent.Level = config.level;
+                businessComponent.BasicIncoming = config.basicIncoming;
+                businessComponent.CurrentIncoming = config.basicIncoming;
+                businessComponent.IncomintDelay = config.incomintDelay;
+                businessComponent.BasicLevelUpCost = config.basicPrice;
+                businessComponent.IsFirstUpgradeBuyed = false;
+                businessComponent.IsSecondUpgradeBuyed = false;
+                businessComponent.FirstUpgradePrice = config.firstUpgradePrice;
+                businessComponent.SecondUpgradePrice = config.secondUpgradePrice;
+                businessComponent.FirstUpgradeMultipler = config.firstUpgradeIncomingMultiplier;
+                businessComponent.SecondUpgradeMultipler = config.secondUpgradeIncomingMultiplier;
 
-                incomeProgressComponent.incomintProgress = 0;
+                incomeProgressComponent.IncomintProgress = 0;
             
                 var panel = Object.Instantiate(_businessPanelPrefab, _businessPanelParent).GetComponent<BusinessView>();
+                panel.Init(_world, entity);
                 panel.SetBusinessName(config.name);
                 panel.SetLevelText(config.level.ToString());
                 panel.SetIncomingText(config.basicIncoming.ToString());
                 businessViewRef.View = panel;
-            
-                Debug.Log($"Business {businessComponent.name} created!");
             }
         }
     }

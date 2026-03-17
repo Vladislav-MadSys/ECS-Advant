@@ -10,9 +10,9 @@ namespace _Project.Scripts.Configs
         public int basicPrice;
         public int basicIncoming;
         public float incomintDelay;
-        public int firstUpgradePrise;
+        public int firstUpgradePrice;
         public float firstUpgradeIncomingMultiplier;
-        public int secondUpgradePrise;
+        public int secondUpgradePrice;
         public float secondUpgradeIncomingMultiplier;
     }
 }
