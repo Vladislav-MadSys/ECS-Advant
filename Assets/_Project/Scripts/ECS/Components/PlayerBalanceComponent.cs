@@ -1,6 +1,7 @@
-using UnityEngine;
-
-public struct PlayerBalanceComponent
+namespace _Project.Scripts.ECS.Components
 {
-    public int balance;
+    public struct PlayerBalanceComponent
+    {
+        public int balance;
+    }
 }

@@ -1,6 +1,7 @@
-using UnityEngine;
-
-public struct IncomeProgressComponent 
+namespace _Project.Scripts.ECS.Components
 {
-    public float incomintProgress;
+    public struct IncomeProgressComponent 
+    {
+        public float incomintProgress;
+    }
 }

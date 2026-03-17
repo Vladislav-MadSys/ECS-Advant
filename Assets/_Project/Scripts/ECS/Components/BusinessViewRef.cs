@@ -1,4 +1,9 @@
-public struct BusinessViewRef
+using _Project.Scripts.UI;
+
+namespace _Project.Scripts.ECS.Components
 {
-    public BusinessView View;
+    public struct BusinessViewRef
+    {
+        public BusinessView View;
+    }
 }

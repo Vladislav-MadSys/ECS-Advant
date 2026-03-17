@@ -1,9 +1,10 @@
-using UnityEngine;
-
-public struct BusinessComponent
+namespace _Project.Scripts.ECS.Components
 {
-    public string name;
-    public int level;
-    public int basicIncoming;
-    public float incomintDelay;
+    public struct BusinessComponent
+    {
+        public string name;
+        public int level;
+        public int basicIncoming;
+        public float incomintDelay;
+    }
 }
